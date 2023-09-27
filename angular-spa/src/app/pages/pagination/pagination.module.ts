@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CoreModule } from 'src/shared/core.module';
-import { MaterialModule } from 'src/shared/material.module';
+import { CoreModule } from 'src/shared/modules/core.module';
+import { MaterialModule } from 'src/shared/modules/material.module';
 import { PaginationComponent } from './pagination.component';
 import { paginationRoutes } from './pagination.routes';
 
@@ -15,4 +15,4 @@ import { paginationRoutes } from './pagination.routes';
     MaterialModule
   ]
 })
-export class PlaygroundModule { }
+export class PaginationModule { }

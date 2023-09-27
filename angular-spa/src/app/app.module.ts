@@ -3,20 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MaterialModule } from 'src/shared/material.module';
-import { PaginationComponent } from './pages/pagination/pagination.component';
+import { MaterialModule } from 'src/shared/modules/material.module';
+import { PaginationModule } from './pages/pagination/pagination.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PaginationComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    PaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
