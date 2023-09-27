@@ -6,8 +6,9 @@ using System.Data.SqlClient;
 
 namespace Net6WebAPI.Controllers
 {
+    [ApiVersion("1.0")]
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class EmployeeReimbursementController : ControllerBase
     {
 
@@ -24,7 +25,7 @@ namespace Net6WebAPI.Controllers
         }
 
 
-        [HttpPost("", Name = "GetPaginatedEmployeeReimbursement")]
+        [HttpPost("paginated-data", Name = "GetPaginatedEmployeeReimbursement")]
         public async Task<ActionResult<PaginationViewModel<EmployeeReimbursementViewModel>>> GetPaginatedEmployeeReimbursement(
        [FromBody] EmployeeReimbursementSearchViewModel searchViewModel
             )

@@ -1,1 +1,43 @@
-<p>pagination works!</p>
+Search: <input type="text" [(ngModel)]="search" (input)="onSearchChange($event)"> <br/>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns; let i = index">
+      <th mat-header-cell *matHeaderCellDef>{{ capitalizeFirstLetter(column) }}</th>
+      <td mat-cell *matCellDef="let emp">
+       
+      <ng-container *ngIf="column == 'type'">
+           {{ dataColumnChecker(emp[column])}}
+        </ng-container> 
+         <ng-container *ngIf="column == 'totalAmount'">
+            <p>{{emp[column] | currency:'PHP'}}</p>
+        </ng-container>
+        <ng-container *ngIf="column == 'status'">
+            {{ dataColumnChecker(emp[column])}}
+        </ng-container>
+        <ng-container *ngIf="column == 'reviewer'">
+            {{ dataColumnChecker(emp[column])}}
+        </ng-container>
+        <ng-container *ngIf="column == 'transactionDate'">
+            {{ dataColumnChecker(emp[column]) | date : "MM/dd/YYYY"}}
+        </ng-container>
+        <ng-container *ngIf="column == 'requestedDate'">
+            {{ dataColumnChecker(emp[column]) | date : "MM/dd/YYYY"}}
+        </ng-container>
+        <ng-container *ngIf="column == 'action'">
+            <button mat-button color="primary">Update</button>
+            <button mat-button color="warn">Delete</button>
+        </ng-container>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let emprow; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    #paginator
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizes"
+    [showFirstLastButtons]="true"
+    [length]="dataCount"
+    (page)="page($event)"
+  ></mat-paginator>

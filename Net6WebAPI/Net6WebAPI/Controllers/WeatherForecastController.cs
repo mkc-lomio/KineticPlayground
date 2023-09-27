@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Net6WebAPI.Controllers
 {
+    [ApiVersion("1.0")]
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
