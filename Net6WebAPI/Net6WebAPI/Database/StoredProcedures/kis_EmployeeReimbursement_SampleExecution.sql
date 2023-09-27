@@ -1,6 +1,6 @@
 
 
-
+EXEC kis_spEmployeeReimbursementRetrieveAllCount_Search
 EXEC kis_spEmployeeReimbursementRetrieveAllCount_Search @Search = 'Approved'
 
 EXEC kis_spEmployeeReimbursementRetrieveAllCount
