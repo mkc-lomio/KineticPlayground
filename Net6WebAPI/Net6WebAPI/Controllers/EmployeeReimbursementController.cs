@@ -25,6 +25,102 @@ namespace Net6WebAPI.Controllers
         }
 
 
+
+        [HttpDelete("", Name = "DeleteEmployeeReimbursementById")]
+        public async Task<ActionResult> DeleteEmployeeReimbursementById(
+        [FromQuery] int id
+            )
+        {
+            try
+            {
+             
+               
+                var proc = string.Format(@"kis_spEmployeeReimbursement_DeleteRecord");
+
+                var param = new DynamicParameters();
+                param.Add("@employeeReimbursementId", id);
+
+
+                await this.ExecuteSQL<EmployeeReimbursementViewModel>(proc, param);
+               
+
+                return Ok();
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+
+        [HttpGet("", Name = "GetEmployeeReimbursementById")]
+        public async Task<ActionResult> GetEmployeeReimbursementById(
+[FromQuery] int id
+    )
+        {
+            try
+            {
+                var proc = string.Format(@"kis_spEmployeeReimbursement_RetrieveOneRecord");
+
+                var param = new DynamicParameters();
+                param.Add("@employeeReimbursementId", id);
+
+
+                var result = await this.ExecuteSQL<EmployeeReimbursementViewModel>(proc, param);
+
+                if (result.ToList().FirstOrDefault() == null)
+                    return NotFound();
+
+                return Ok(result.ToList().FirstOrDefault());
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost("", Name = "CreateUpdateEmployeeReimbursement")]
+        public async Task<ActionResult> CreateUpdateEmployeeReimbursement(
+      [FromBody] EmployeeReimbursementCreateUpdateViewModel employeeReimbursement
+          )
+        {
+            try
+            {
+
+
+                var proc = string.Format(@"kis_spEmployeeReimbursement_UpdateInsertRecord");
+
+                var param = new DynamicParameters();
+                param.Add("@employeeReimbursementId", employeeReimbursement.Id);
+                param.Add("@reimbursementTypeId", employeeReimbursement.ReimbursementTypeId);
+                param.Add("@employeeId", employeeReimbursement.EmployeeId);
+                param.Add("@reviewerEmployeeId", employeeReimbursement.ReviewerEmployeeId);
+                param.Add("@reimbursementStatusId", employeeReimbursement.ReimbursementStatusId);
+                param.Add("@additionalInfo", employeeReimbursement.AdditionalInfo);
+                param.Add("@totalAmount", employeeReimbursement.TotalAmount);
+                param.Add("@transactionDate", employeeReimbursement.TransactionDate);
+                param.Add("@approvedDate", employeeReimbursement.ApprovedDate);
+                param.Add("@requestedDate", employeeReimbursement.RequestedDate);
+                param.Add("@reviewerRemarks", employeeReimbursement.ReviewerRemarks);
+                param.Add("@modifiedBy", "system");
+                param.Add("@createdBy", "system");
+                param.Add("@isActive", employeeReimbursement.IsActive);
+                param.Add("@dateCreated", DateTime.UtcNow);
+                param.Add("@dateModified", DateTime.UtcNow);
+
+
+                await this.ExecuteSQL<EmployeeReimbursementCreateUpdateViewModel>(proc, param);
+
+
+                return Ok();
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+
         [HttpPost("paginated-data", Name = "GetPaginatedEmployeeReimbursement")]
         public async Task<ActionResult<PaginationViewModel<EmployeeReimbursementViewModel>>> GetPaginatedEmployeeReimbursement(
        [FromBody] EmployeeReimbursementSearchViewModel searchViewModel

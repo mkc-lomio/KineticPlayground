@@ -19,6 +19,8 @@ BEGIN
 			FROM EmployeeReimbursements er
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId
+			WHERE  er.IsActive = 1
+
 	) A
 
 END;

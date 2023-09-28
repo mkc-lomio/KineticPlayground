@@ -6,6 +6,6 @@ ALTER PROCEDURE kis_spEmployeeReimbursement_DeleteRecord (
 AS
 BEGIN
 
-	 DELETE EmployeeReimbursements WHERE Id = @employeeReimbursementId
+	UPDATE EmployeeReimbursements SET IsActive = 0 WHERE Id = @employeeReimbursementId
 
 END;

@@ -1,37 +1,25 @@
-.right {
-    position: absolute;
-    right: 0px;
-    width: 150px;
-}
-
-.margin-bottom{
-    margin-bottom: 25px;
-}
-
-.margin-top{
-    margin-top: 25px;
-}
-
-.left {
-    float: left;
-    width: 150px;   
-  }
-
 .btn-create-theme {
     background-color: green;
     color: white !important;
 }
 
-.btn-update-theme {
+.btn-save-theme {
     background-color: darkblue;
     width: 120px;
     padding: 3px;
     color: white !important;
 }
 
-.btn-delete-theme {
+.btn-cancel-theme {
     background-color: darkred;
     width: 120px;
     padding: 3px;
     color: white !important;
+}
+
+.btn-close-theme {
+    background-color: white;
+    width: 120px;
+    padding: 3px;
+    color: darkblue !important;
 }

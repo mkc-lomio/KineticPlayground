@@ -22,6 +22,7 @@ BEGIN
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId
 			WHERE rs.[Description] LIKE @search + '%' -- NOTE: For temporary. not yet final.
+							AND er.IsActive = 1
 	) A
 
 END;

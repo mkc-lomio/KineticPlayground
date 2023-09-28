@@ -4,6 +4,8 @@ import { EmployeeReimbursementService } from 'src/shared/services/employee-reimb
 import { MatPaginator } from '@angular/material/paginator';
 import { EmployeeReimbursementModel } from 'src/shared/models/employee-reimbursement-model';
 import {capitalizeFirstLetter} from 'src/shared/functions/helper-functions';
+import { MatDialog } from '@angular/material/dialog';
+import { EmployeeReimbursementModalComponent } from './employee-reimbursement-modal/employee-reimbursement-modal.component';
 
 @Component({
   selector: 'app-pagination',
@@ -33,9 +35,11 @@ export class PaginationComponent implements OnInit {
   sortColumn = "TransactionDate"
   sortType = "ASC"
   dataCount = 0;
+  formStatus = "Create";
 
   constructor(private _employeeReimbursementService: EmployeeReimbursementService,
-    private _cdr: ChangeDetectorRef){
+    private _cdr: ChangeDetectorRef,
+    public dialog: MatDialog){
 
   }
 
@@ -86,5 +90,29 @@ export class PaginationComponent implements OnInit {
    onSearchChange(event: any){
     this.getPaginatedEmployeeReimbursement();
    }
- 
+
+   openCUDialog(status: string,data?: any){
+    this.formStatus = status
+
+    const dialogRef = this.dialog.open(EmployeeReimbursementModalComponent, {
+      width: this.formStatus === "Delete" ? "400px" : '500px', 
+     height: this.formStatus === "Delete" ? "100px" : '700px',
+      data: {formStatus:  this.formStatus, empReimbursementFromPaginatedData: data},
+   });
+
+   dialogRef.afterClosed().subscribe(result => {
+    this.getPaginatedEmployeeReimbursement();
+    if(result != undefined){
+       
+     }
+   });
+
+    console.log(data)
+    console.log("Hello!")
+
+   }
+
+
+
+  
 }

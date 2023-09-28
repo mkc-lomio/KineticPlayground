@@ -1,6 +1,11 @@
-Search: <input type="text" [(ngModel)]="search" (input)="onSearchChange($event)"> <br/>
-
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="margin-bottom">
+   <div class="left">
+    Search: <input type="text" [(ngModel)]="search" (input)="onSearchChange($event)">  
+   </div>
+   <button class="right btn-create-theme" mat-button (click)="openCUDialog('Create')">Create</button>
+</div>
+<div class="margin-top">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 margin-top">
     <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns; let i = index">
       <th mat-header-cell *matHeaderCellDef>{{ capitalizeFirstLetter(column) }}</th>
       <td mat-cell *matCellDef="let emp">
@@ -24,8 +29,8 @@ Search: <input type="text" [(ngModel)]="search" (input)="onSearchChange($event)"
             {{ dataColumnChecker(emp[column]) | date : "MM/dd/YYYY"}}
         </ng-container>
         <ng-container *ngIf="column == 'action'">
-            <button mat-button color="primary">Update</button>
-            <button mat-button color="warn">Delete</button>
+            <button mat-button class="btn-update-theme" (click)="openCUDialog('Update',emp)">Update</button> &nbsp;
+            <button mat-button class="btn-delete-theme" (click)="openCUDialog('Delete',emp)">Delete</button>
         </ng-container>
       </td>
     </ng-container>
@@ -41,3 +46,5 @@ Search: <input type="text" [(ngModel)]="search" (input)="onSearchChange($event)"
     [length]="dataCount"
     (page)="page($event)"
   ></mat-paginator>
+
+</div>
