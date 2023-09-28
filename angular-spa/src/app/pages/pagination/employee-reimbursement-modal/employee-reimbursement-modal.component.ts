@@ -114,9 +114,7 @@ export class EmployeeReimbursementModalComponent implements OnInit {
         ]),
         transactionDate: new FormControl(getUTCDateTime()),
         requestedDate: new FormControl(getUTCDateTime()),
-        additionalInformation: new FormControl("", [
-          Validators.required
-        ]),
+        additionalInformation: new FormControl("", []),
         totalAmount: new FormControl(0, [
           Validators.required
         ]),
