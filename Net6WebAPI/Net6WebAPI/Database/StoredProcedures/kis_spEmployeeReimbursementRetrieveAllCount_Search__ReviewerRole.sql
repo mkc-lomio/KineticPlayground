@@ -1,9 +1,9 @@
 CREATE
 	OR
-ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllCount 
-(
-	 @employeeId AS INT
-)
+ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllCount_Search_ReviewerRole (
+	 @reviewerEmployeeId AS INT,
+	 @search AS VARCHAR(100) = ''
+	)
 AS
 BEGIN
 
@@ -22,8 +22,9 @@ BEGIN
 			FROM EmployeeReimbursements er
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId
-			WHERE  er.IsActive = 1 AND er.EmployeeId = @employeeId
-
+			WHERE rs.[Description] LIKE @search + '%' -- NOTE: For temporary. not yet final.
+							AND er.IsActive = 1
+							AND er.ReviewerEmployeeId = @reviewerEmployeeId
 	) A
 
 END;

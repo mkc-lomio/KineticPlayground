@@ -41,7 +41,7 @@ namespace Net6WebAPI.Controllers
                 param.Add("@employeeReimbursementId", id);
 
 
-                await this.ExecuteSQL<EmployeeReimbursementPaginateViewModel>(proc, param);
+                await this.ExecuteSQL<object>(proc, param);
                
 
                 return Ok();
@@ -52,6 +52,67 @@ namespace Net6WebAPI.Controllers
             }
         }
 
+
+
+        [HttpPut("Cancellation", Name = "CancelEmployeeReimbursementById")]
+        public async Task<ActionResult> CancelEmployeeReimbursementById(
+        [FromQuery] int id
+            )
+        {
+            try
+            {
+
+
+                var proc = string.Format(@"kis_spEmployeeReimbursement_CancellationRecord");
+
+                var param = new DynamicParameters();
+                param.Add("@employeeReimbursementId", id);
+
+
+                await this.ExecuteSQL<object>(proc, param);
+
+
+                return Ok();
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("ReimbursementStatus", Name = "GetReimbursementStatus")]
+        public async Task<ActionResult> GetReimbursementStatus()
+        {
+            try
+            {
+                var proc = string.Format(@"kis_spReimbursementStatus_AllRecord");
+ 
+                var result = await this.ExecuteSQL<ReimbursementStatusViewModel>(proc, null);
+
+                return Ok(result.ToList());
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("ReimbursementTypes", Name = "GetReimbursementTypes")]
+        public async Task<ActionResult> GetReimbursementTypes()
+        {
+            try
+            {
+                var proc = string.Format(@"kis_spReimbursementTypes_AllRecord");
+
+                var result = await this.ExecuteSQL<ReimbursementTypeViewModel>(proc, null);
+
+                return Ok(result.ToList());
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
 
         [HttpGet("", Name = "GetEmployeeReimbursementById")]
         public async Task<ActionResult> GetEmployeeReimbursementById(
@@ -109,7 +170,7 @@ namespace Net6WebAPI.Controllers
                 param.Add("@dateModified", DateTime.UtcNow);
 
 
-                await this.ExecuteSQL<EmployeeReimbursementCreateUpdateViewModel>(proc, param);
+                await this.ExecuteSQL<object>(proc, param);
 
 
                 return Ok();
@@ -135,7 +196,10 @@ namespace Net6WebAPI.Controllers
                 {
                     var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAllCount");
 
-                    var result = await this.ExecuteSQL<int>(proc, null);
+                    var param = new DynamicParameters();
+                    param.Add("@employeeId", searchViewModel.EmployeeId);
+
+                    var result = await this.ExecuteSQL<int>(proc, param);
                     dataCount = result.ToList().FirstOrDefault();
                 }
                 else
@@ -144,6 +208,7 @@ namespace Net6WebAPI.Controllers
 
                     var param = new DynamicParameters();
                     param.Add("@search", searchViewModel.Search);
+                    param.Add("@employeeId", searchViewModel.EmployeeId);
 
                     var result = await this.ExecuteSQL<int>(proc, param);
                     dataCount = result.ToList().FirstOrDefault();
@@ -156,6 +221,7 @@ namespace Net6WebAPI.Controllers
                     var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAll_AutoGenByPage");
 
                     var param = new DynamicParameters();
+                    param.Add("@employeeId", searchViewModel.EmployeeId);
                     param.Add("@pageNumber", searchViewModel.PageNumber);
                     param.Add("@pageRows", searchViewModel.PageSize);
                     param.Add("@sortingColumn", searchViewModel.SortColumn);
@@ -168,6 +234,7 @@ namespace Net6WebAPI.Controllers
                     var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAllBySearch_AutoGenByPage"); 
                     
                     var param = new DynamicParameters();
+                    param.Add("@employeeId", searchViewModel.EmployeeId);
                     param.Add("@pageNumber", searchViewModel.PageNumber);
                     param.Add("@pageRows", searchViewModel.PageSize);
                     param.Add("@search", searchViewModel.Search);

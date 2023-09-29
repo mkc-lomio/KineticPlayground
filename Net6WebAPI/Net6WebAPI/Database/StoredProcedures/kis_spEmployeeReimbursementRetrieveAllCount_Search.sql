@@ -1,6 +1,7 @@
 CREATE
 	OR
 ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllCount_Search (
+	 @employeeId AS INT,
 	 @search AS VARCHAR(100) = ''
 	)
 AS
@@ -23,6 +24,7 @@ BEGIN
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId
 			WHERE rs.[Description] LIKE @search + '%' -- NOTE: For temporary. not yet final.
 							AND er.IsActive = 1
+							AND er.EmployeeId = @employeeId
 	) A
 
 END;

@@ -1,6 +1,7 @@
 CREATE
 	OR
 ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAll_AutoGenByPage(
+	 @employeeId AS INT,
 	@pageNumber AS INT
 	,@pageRows AS INT
 	,@sortingColumn AS VARCHAR(100) = 'Type'
@@ -27,7 +28,7 @@ BEGIN
 			FROM EmployeeReimbursements er
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId
-			WHERE er.IsActive = 1
+			WHERE er.IsActive = 1  AND er.EmployeeId = @employeeId
 	) A
 	ORDER BY CASE 
 			WHEN @sortingColumn = 'Type'

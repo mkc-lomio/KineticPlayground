@@ -1,7 +1,7 @@
 CREATE
 	OR
-ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllBySearch_AutoGenByPage(
-	 @employeeId AS INT,
+ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllBySearch_AutoGenByPage_ReviewerRole(
+	 @reviewerEmployeeId AS INT,
 	@pageNumber AS INT
 	,@pageRows AS INT
 	, @search AS VARCHAR(100) = ''
@@ -30,7 +30,7 @@ BEGIN
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId	
 			WHERE rs.[Description] LIKE @search + '%' -- NOTE: For temporary. not yet final.
-				AND er.IsActive = 1  AND er.EmployeeId = @employeeId
+				AND er.IsActive = 1  AND er.ReviewerEmployeeId = @reviewerEmployeeId
 	) A
 	ORDER BY CASE 
 		WHEN @sortingColumn = 'Type'

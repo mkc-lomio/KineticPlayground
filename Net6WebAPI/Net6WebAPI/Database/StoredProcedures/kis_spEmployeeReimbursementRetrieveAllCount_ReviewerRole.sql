@@ -1,8 +1,8 @@
 CREATE
 	OR
-ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllCount 
+ALTER PROCEDURE kis_spEmployeeReimbursementRetrieveAllCount_ReviewerRole 
 (
-	 @employeeId AS INT
+	 @reviewerEmployeeId AS INT
 )
 AS
 BEGIN
@@ -22,7 +22,7 @@ BEGIN
 			FROM EmployeeReimbursements er
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId
-			WHERE  er.IsActive = 1 AND er.EmployeeId = @employeeId
+			WHERE  er.IsActive = 1 AND  er.ReviewerEmployeeId = @reviewerEmployeeId
 
 	) A
 
