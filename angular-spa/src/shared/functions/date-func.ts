@@ -28,6 +28,12 @@ export function getCurrentDate(): any {
     return now.toISOString();
   }
 
+  export function dateSingleDigitWithLeadingZeros(dateNum:number) {
+    if(dateNum < 10)
+     return String(dateNum).padStart(2, '0');
+    return dateNum
+  }
+
   /* References: 
   * https://stackoverflow.com/questions/11526504/minimum-and-maximum-date
   */

@@ -98,9 +98,9 @@ namespace Net6WebAPI.Controllers
                 param.Add("@reimbursementStatusId", employeeReimbursement.ReimbursementStatusId);
                 param.Add("@additionalInfo", employeeReimbursement.AdditionalInfo);
                 param.Add("@totalAmount", employeeReimbursement.TotalAmount);
-                param.Add("@transactionDate", employeeReimbursement.TransactionDate);
+                param.Add("@transactionDate", employeeReimbursement.TransactionDate); // Add day 1 as fix for ts date doing behind scene -1 to c# date
                 param.Add("@approvedDate", employeeReimbursement.ApprovedDate);
-                param.Add("@requestedDate", employeeReimbursement.RequestedDate);
+                param.Add("@requestedDate", employeeReimbursement.RequestedDate); // Add day 1 as fix for ts date doing behind scene -1 to c# date
                 param.Add("@reviewerRemarks", employeeReimbursement.ReviewerRemarks);
                 param.Add("@modifiedBy", "system");
                 param.Add("@createdBy", "system");

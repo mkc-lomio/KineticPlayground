@@ -111,8 +111,5 @@ export class PaginationComponent implements OnInit {
       if (result != undefined) {
       }
     });
-
-    console.log(data);
-    console.log("Hello!");
   }
 }

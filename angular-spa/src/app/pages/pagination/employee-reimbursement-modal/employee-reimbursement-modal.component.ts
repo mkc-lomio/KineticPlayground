@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, Validators } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { getUTCDateTime } from "src/shared/functions/date-func";
+import { dateSingleDigitWithLeadingZeros, getISODateTime, getUTCDateTime } from "src/shared/functions/date-func";
+import { deepClone } from "src/shared/functions/object-clone";
 import { EmployeeReimbursementService } from "src/shared/services/employee-reimbursement.service";
 
 @Component({
@@ -111,8 +112,8 @@ export class EmployeeReimbursementModalComponent implements OnInit {
   formGroupInit() {
     this.employeReimbursementForm = this.fb.group({
       reimbursementType: new FormControl("", [Validators.required]),
-      transactionDate: new FormControl(getUTCDateTime()),
-      requestedDate: new FormControl(getUTCDateTime()),
+      transactionDate: new FormControl(getISODateTime()),
+      requestedDate: new FormControl(getISODateTime()),
       additionalInformation: new FormControl("", []),
       totalAmount: new FormControl(0, [Validators.required]),
     });
@@ -150,8 +151,10 @@ export class EmployeeReimbursementModalComponent implements OnInit {
     if (data != undefined) {
       let employeeReimbursementPayload =
         this.buildEmployeeReimbursementData(data);
-      if (this.formStatus === "Create")
+
+      if (this.formStatus === "Create"){
         this.createEmployeeReimbursement(employeeReimbursementPayload);
+     }
       if (this.formStatus === "Update") {
         this.updateEmployeeReimbursement(employeeReimbursementPayload);
       }
@@ -171,9 +174,10 @@ export class EmployeeReimbursementModalComponent implements OnInit {
   }
 
   dateChangeHandler(date: Date, type: string) {
-    const stringDate: string = `${
-      date.getMonth() + 1
-    }/${date.getDate()}/${date.getFullYear()}`;
+
+    let stringDate: string = `${date.getFullYear()}-${dateSingleDigitWithLeadingZeros(date.getMonth() + 1)}-${dateSingleDigitWithLeadingZeros(date.getDate())}T00:00:00.000Z`
+    // toISOString Format - YYYY-MM-ddT00:00:00.000Z example 2023-09-29T00:00:00.000Z 
+
     if (type === "transactionDate") {
       this.employeReimbursementForm.get("transactionDate").setValue(stringDate);
     }
@@ -186,6 +190,7 @@ export class EmployeeReimbursementModalComponent implements OnInit {
     let reimbursementType = this.reimbursementTypes.find(
       (x) => x.code == formData.reimbursementType
     );
+
     let data = {
       id: this.formStatus === "Create" ? 0 : this.employeeReimbursementId,
       reimbursementTypeId: reimbursementType?.id ?? 0,
@@ -194,10 +199,10 @@ export class EmployeeReimbursementModalComponent implements OnInit {
       reimbursementStatusId: 2,
       additionalInfo: formData.additionalInformation,
       totalAmount: formData.totalAmount,
-      transactionDate: new Date(formData.transactionDate),
+      transactionDate: formData.transactionDate,
       approvedDate: null,
       isActive: true,
-      requestedDate: new Date(formData.requestedDate),
+      requestedDate: formData.requestedDate,
       reviewerRemarks: "",
     };
     return data;
@@ -263,16 +268,25 @@ export class EmployeeReimbursementModalComponent implements OnInit {
               this.employeReimbursementForm
                 .get("reimbursementType")
                 .setValue(reimbursementType.code);
+
               this.employeReimbursementForm
                 .get("transactionDate")
                 .setValue(this.employeeReimbursementDetails.transactionDate);
+
+
               this.transactionDate =
                 this.employeeReimbursementDetails.transactionDate;
+
+
               this.employeReimbursementForm
                 .get("requestedDate")
                 .setValue(this.employeeReimbursementDetails.requestedDate);
+  
+
               this.requestedDate =
                 this.employeeReimbursementDetails.requestedDate;
+
+                
               this.employeReimbursementForm
                 .get("additionalInformation")
                 .setValue(this.employeeReimbursementDetails.additionalInfo);

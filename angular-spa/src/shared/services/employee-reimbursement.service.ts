@@ -31,17 +31,20 @@ export class EmployeeReimbursementService {
   "reimbursementStatusId": 0,
   "additionalInfo": "string",
   "totalAmount": 0,
-  "transactionDate": "2023-09-28T01:29:59.981Z",
-  "approvedDate": "2023-09-28T01:29:59.981Z",
-  "requestedDate": "2023-09-28T01:29:59.981Z",
+  "transactionDate": "2023-09-28T00:00:00.000Z",
+  "approvedDate": "2023-09-28T00:00:00.000Z",
+  "requestedDate": "2023-09-28T00:00:00.000Z",
    "isActive": false,
   "reviewerRemarks": "string"
        }
    * @returns STATUS OK / NOTFOUND
    *
    */
+
+  
 createOrUpdateEmployeeReimbursement(data: any): Observable<any> {
   let url= `${environment.kineticplaygroundapi}/api/EmployeeReimbursement`;
+  
   let body=data;
   return this.http.post(url, body);
 }
