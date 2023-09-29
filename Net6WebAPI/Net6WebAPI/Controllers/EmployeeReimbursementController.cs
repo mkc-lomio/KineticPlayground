@@ -253,6 +253,78 @@ namespace Net6WebAPI.Controllers
             }
         }
 
+
+        [HttpPost("paginated-data/reviewer-access", Name = "GetPaginatedEmployeeReimbursementForReviewerRole")]
+        public async Task<ActionResult<PaginationViewModel<EmployeeReimbursementPaginateViewModel>>> GetPaginatedEmployeeReimbursementForReviewerRole(
+     [FromBody] EmployeeReimbursementSearchViewModel searchViewModel
+          )
+        {
+            try
+            {
+                int dataCount = 0;
+                IEnumerable<EmployeeReimbursementPaginateViewModel> employeeReimbursements = new List<EmployeeReimbursementPaginateViewModel>();
+
+                if (string.IsNullOrEmpty(searchViewModel.Search))
+                {
+                    var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAllCount_ReviewerRole");
+
+                    var param = new DynamicParameters();
+                    param.Add("@reviewerEmployeeId", searchViewModel.ReviewerEmployeeId);
+
+                    var result = await this.ExecuteSQL<int>(proc, param);
+                    dataCount = result.ToList().FirstOrDefault();
+                }
+                else
+                {
+                    var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAllCount_Search_ReviewerRole");
+
+                    var param = new DynamicParameters();
+                    param.Add("@search", searchViewModel.Search);
+                    param.Add("@reviewerEmployeeId", searchViewModel.ReviewerEmployeeId);
+
+                    var result = await this.ExecuteSQL<int>(proc, param);
+                    dataCount = result.ToList().FirstOrDefault();
+                }
+
+                if (dataCount == 0) return NotFound();
+
+                if (string.IsNullOrEmpty(searchViewModel.Search))
+                {
+                    var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAll_AutoGenByPage_ReviewerRole");
+
+                    var param = new DynamicParameters();
+                    param.Add("@reviewerEmployeeId", searchViewModel.ReviewerEmployeeId);
+                    param.Add("@pageNumber", searchViewModel.PageNumber);
+                    param.Add("@pageRows", searchViewModel.PageSize);
+                    param.Add("@sortingColumn", searchViewModel.SortColumn);
+                    param.Add("@sortingType", searchViewModel.SortType);
+
+                    employeeReimbursements = await this.ExecuteSQL<EmployeeReimbursementPaginateViewModel>(proc, param);
+                }
+                else
+                {
+                    var proc = string.Format(@"kis_spEmployeeReimbursementRetrieveAllBySearch_AutoGenByPage_ReviewerRole");
+
+                    var param = new DynamicParameters();
+                    param.Add("@reviewerEmployeeId", searchViewModel.ReviewerEmployeeId);
+                    param.Add("@pageNumber", searchViewModel.PageNumber);
+                    param.Add("@pageRows", searchViewModel.PageSize);
+                    param.Add("@search", searchViewModel.Search);
+                    param.Add("@sortingColumn", searchViewModel.SortColumn);
+                    param.Add("@sortingType", searchViewModel.SortType);
+
+
+                    employeeReimbursements = await this.ExecuteSQL<EmployeeReimbursementPaginateViewModel>(proc, param);
+                }
+
+                return new PaginationViewModel<EmployeeReimbursementPaginateViewModel>(searchViewModel.PageNumber, searchViewModel.PageSize, dataCount, employeeReimbursements);
+            }
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
         private async Task<IEnumerable<T>> ExecuteSQL<T>(string sql, DynamicParameters? parameters)
         {
             using (var connection = new SqlConnection(_connectionString))
