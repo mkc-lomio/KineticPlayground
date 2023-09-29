@@ -30,65 +30,65 @@ BEGIN
 				AND er.IsActive = 1
 	) A
 	ORDER BY CASE 
-			WHEN @sortingColumn = 'Type'
+		WHEN @sortingColumn = 'Type'
 				AND @sortingType = 'ASC'
 				THEN [Type]
-			END
+			END ASC
 		,CASE 
 			WHEN @sortingColumn = 'Type'
 				AND @sortingType = 'DESC'
 				THEN [Type]
-			END
+			END DESC
 		,CASE 
 			WHEN @sortingColumn = 'TotalAmount'
 				AND @sortingType = 'ASC'
 				THEN TotalAmount
-			END
+			END ASC
 		,CASE 
 			WHEN @sortingColumn = 'TotalAmount'
 				AND @sortingType = 'DESC'
 				THEN TotalAmount
-			END
+			END DESC
 		,CASE 
 			WHEN @sortingColumn = 'Status'
 				AND @sortingType = 'ASC'
 				THEN [Status]
-			END
+			END ASC
 		,CASE 
 			WHEN @sortingColumn = 'Status'
 				AND @sortingType = 'DESC'
 				THEN [Status]
-			END
+			END DESC
 		,CASE 
 			WHEN @sortingColumn = 'Reviewer'
 				AND @sortingType = 'ASC'
 				THEN Reviewer
-			END
+			END ASC
 		,CASE 
 			WHEN @sortingColumn = 'Reviewer'
 				AND @sortingType = 'DESC'
 				THEN Reviewer
-			END
+			END DESC
 		,CASE 
 			WHEN @sortingColumn = 'TransactionDate'
 				AND @sortingType = 'ASC'
 				THEN TransactionDate
-			END
+			END ASC
 		,CASE 
 			WHEN @sortingColumn = 'TransactionDate'
 				AND @sortingType = 'DESC'
 				THEN TransactionDate
-			END
+			END DESC
 		,CASE 
 			WHEN @sortingColumn = 'RequestedDate'
 				AND @sortingType = 'ASC'
 				THEN RequestedDate
-			END
+			END ASC
 		,CASE 
 			WHEN @sortingColumn = 'RequestedDate'
 				AND @sortingType = 'DESC'
 				THEN RequestedDate
-		    END 
+		    END DESC
 			
 	OFFSET(@pageNumber - 1) * @pageRows ROWS
 	FETCH NEXT @pageRows ROWS ONLY;

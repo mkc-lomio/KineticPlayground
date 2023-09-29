@@ -1,6 +1,6 @@
 ﻿namespace Net6WebAPI.ViewModels
 {
-    public class EmployeeReimbursementViewModel
+    public class EmployeeReimbursementPaginateViewModel
     {
         public int EmployeeReimbursementId { get; set; }
         public int ReimbursementTypeId { get; set; }

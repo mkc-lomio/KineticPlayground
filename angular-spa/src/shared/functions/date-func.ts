@@ -15,6 +15,12 @@ export function getCurrentDate(): any {
     const now = new Date();
     return now.toUTCString();
   }
+
+  export function convertToUTCDateTime(date: string): any {
+    // Mon, 31 Jul 2023 08:40:47 GMT
+    const now = new Date(date);
+    return now.toUTCString();
+  }
   
   export function getISODateTime(): any {
     // 👉️ 2023-07-31T08:40:47.891Z

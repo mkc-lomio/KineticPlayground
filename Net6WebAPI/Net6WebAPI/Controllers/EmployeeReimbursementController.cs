@@ -41,7 +41,7 @@ namespace Net6WebAPI.Controllers
                 param.Add("@employeeReimbursementId", id);
 
 
-                await this.ExecuteSQL<EmployeeReimbursementViewModel>(proc, param);
+                await this.ExecuteSQL<EmployeeReimbursementPaginateViewModel>(proc, param);
                
 
                 return Ok();
@@ -66,7 +66,7 @@ namespace Net6WebAPI.Controllers
                 param.Add("@employeeReimbursementId", id);
 
 
-                var result = await this.ExecuteSQL<EmployeeReimbursementViewModel>(proc, param);
+                var result = await this.ExecuteSQL<EmployeeReimbursementDetailsViewModel>(proc, param);
 
                 if (result.ToList().FirstOrDefault() == null)
                     return NotFound();
@@ -122,14 +122,14 @@ namespace Net6WebAPI.Controllers
 
 
         [HttpPost("paginated-data", Name = "GetPaginatedEmployeeReimbursement")]
-        public async Task<ActionResult<PaginationViewModel<EmployeeReimbursementViewModel>>> GetPaginatedEmployeeReimbursement(
+        public async Task<ActionResult<PaginationViewModel<EmployeeReimbursementPaginateViewModel>>> GetPaginatedEmployeeReimbursement(
        [FromBody] EmployeeReimbursementSearchViewModel searchViewModel
             )
         {
             try
             {
                 int dataCount = 0;
-                IEnumerable<EmployeeReimbursementViewModel> employeeReimbursements = new List<EmployeeReimbursementViewModel>();
+                IEnumerable<EmployeeReimbursementPaginateViewModel> employeeReimbursements = new List<EmployeeReimbursementPaginateViewModel>();
 
                 if (string.IsNullOrEmpty(searchViewModel.Search))
                 {
@@ -161,7 +161,7 @@ namespace Net6WebAPI.Controllers
                     param.Add("@sortingColumn", searchViewModel.SortColumn);
                     param.Add("@sortingType", searchViewModel.SortType);
 
-                    employeeReimbursements = await this.ExecuteSQL<EmployeeReimbursementViewModel>(proc, param);
+                    employeeReimbursements = await this.ExecuteSQL<EmployeeReimbursementPaginateViewModel>(proc, param);
                 }
                 else
                 {
@@ -175,10 +175,10 @@ namespace Net6WebAPI.Controllers
                     param.Add("@sortingType", searchViewModel.SortType);
            
 
-                    employeeReimbursements = await this.ExecuteSQL<EmployeeReimbursementViewModel>(proc, param);
+                    employeeReimbursements = await this.ExecuteSQL<EmployeeReimbursementPaginateViewModel>(proc, param);
                 }
 
-                return new PaginationViewModel<EmployeeReimbursementViewModel>(searchViewModel.PageNumber, searchViewModel.PageSize, dataCount, employeeReimbursements);
+                return new PaginationViewModel<EmployeeReimbursementPaginateViewModel>(searchViewModel.PageNumber, searchViewModel.PageSize, dataCount, employeeReimbursements);
             }
             catch
             {
