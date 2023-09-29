@@ -13,6 +13,8 @@
         public string Reviewer { get; set; } = string.Empty;
         public DateTime TransactionDate { get; set; }
         public DateTime RequestedDate { get; set; }
+        public string ReviewerRemarks { get; set; } = string.Empty;
+        public DateTime ApprovedDate { get; set; }
 
     }
 }

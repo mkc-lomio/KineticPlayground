@@ -14,7 +14,13 @@
                   <p>{{emp[column] | currency:'PHP'}}</p>
               </ng-container>
               <ng-container *ngIf="column == 'status'">
-                  {{ dataColumnChecker(emp[column])}}
+                <ng-container *ngIf="emp.status == 'Approved' || emp.status == 'Rejected'; else otherStatus">
+                    <p [tooltip]="showTooltip(emp)"> {{ dataColumnChecker(emp[column])}}</p> <!--Light blue with underline -->
+                </ng-container>
+                
+                <ng-template #otherStatus>
+                    <p>{{ dataColumnChecker(emp[column])}}</p>
+                </ng-template>
               </ng-container>
               <ng-container *ngIf="column == 'reviewer'">
                   {{ dataColumnChecker(emp[column])}}

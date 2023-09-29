@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { EmployeeReimbursementService } from "src/shared/services/employee-reimbursement.service";
 import { EmployeeReimbursementModel } from "src/shared/models/employee-reimbursement-model";
@@ -8,7 +8,7 @@ import { EmployeeReimbursementModalComponent } from "./employee-reimbursement-mo
 @Component({
   selector: "app-pagination",
   templateUrl: "./pagination.component.html",
-  styleUrls: ["./pagination.component.scss"],
+  styleUrls: ["./pagination.component.scss"]
 })
 export class PaginationComponent implements OnInit {
   displayedColumns: string[] = [
@@ -111,5 +111,14 @@ export class PaginationComponent implements OnInit {
       if (result != undefined) {
       }
     });
+  }
+
+  showTooltip(emp: any): any {
+    let htmlContent: string = ""; 
+    if(emp.status === "Approved")
+      htmlContent = `<p>Approved Date: ${emp.approvedDate}</p><br />`
+
+     htmlContent = htmlContent + `<p>Remarks: ${emp.reviewerRemarks}</p>`;
+    return htmlContent;
   }
 }

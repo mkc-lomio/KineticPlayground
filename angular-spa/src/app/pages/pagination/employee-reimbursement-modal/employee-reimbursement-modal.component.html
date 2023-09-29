@@ -27,14 +27,14 @@
 
         <br />
         Transaction Dates
-        <input type="text" id="picker1" readonly [value]="transactionDate" placeholder="Choose a date" [matDatepicker]="transactionDatePicker" (dateChange)="dateChangeHandler($event.value,'transactionDate')" />
+        <input type="text" id="picker1" readonly [value]="transactionDate" [max]="transactionMaxDate" placeholder="Choose a date" [matDatepicker]="transactionDatePicker" (dateChange)="dateChangeHandler($event.value,'transactionDate')" />
         <button type="button" (click)="transactionDatePicker.open()">Pick a transaction Date</button>
         <mat-datepicker #transactionDatePicker></mat-datepicker>
         <br />
         <br />
 
         Requested Dates
-        <input type="text" id="picker2" readonly [value]="requestedDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" />
+        <input type="text" id="picker2" readonly [value]="requestedDate" [min]="requestedMinDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" />
         <button type="button" (click)="requestedDatePicker.open()">Pick a requested Date</button>
         <mat-datepicker #requestedDatePicker></mat-datepicker>
         <br />
@@ -61,8 +61,10 @@
         </pre>
     </form>
 
-    <button mat-button class="btn-save-theme" [disabled]="!employeReimbursementForm.valid" (click)="onSubmit(employeReimbursementForm.value)">Save</button> &nbsp;
-    <ng-container *ngIf="formStatus == 'Update'"> <button mat-button class="btn-cancel-theme">Cancel</button> &nbsp; </ng-container>
+    <button mat-button class="btn-save-theme" [disabled]="employeeReimbursementStatus != 'Submitted' || !employeReimbursementForm.valid" 
+    (click)="onSubmit(employeReimbursementForm.value)">Save</button> &nbsp;
+    <ng-container *ngIf="formStatus == 'Update' && 
+    employeeReimbursementStatus == 'Submitted'"> <button mat-button class="btn-cancel-theme">Cancel</button> &nbsp; </ng-container>
     <button mat-button class="btn-close-theme" (click)="close()">Close</button>
 </ng-container>
 <ng-template #deleteDialog>

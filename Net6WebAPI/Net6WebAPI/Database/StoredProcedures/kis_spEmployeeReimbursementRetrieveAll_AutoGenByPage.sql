@@ -22,6 +22,8 @@ BEGIN
 				,-- need employee table
 				er.TransactionDate
 				,er.RequestedDate
+				,er.ReviewerRemarks
+				,er.ApprovedDate
 			FROM EmployeeReimbursements er
 			INNER JOIN ReimbursementStatus rs ON rs.Id = er.ReimbursementStatusId
 			INNER JOIN ReimbursementTypes rt ON rt.Id = er.ReimbursementTypeId

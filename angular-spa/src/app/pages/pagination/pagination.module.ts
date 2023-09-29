@@ -5,15 +5,18 @@ import { MaterialModule } from 'src/shared/modules/material.module';
 import { PaginationComponent } from './pagination.component';
 import { paginationRoutes } from './pagination.routes';
 import { EmployeeReimbursementModalComponent } from './employee-reimbursement-modal/employee-reimbursement-modal.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
 
 
 
 @NgModule({
-  declarations: [PaginationComponent, EmployeeReimbursementModalComponent],
+  declarations: [PaginationComponent, 
+    EmployeeReimbursementModalComponent],
   imports: [
     CoreModule,
     RouterModule.forRoot(paginationRoutes),
-    MaterialModule
+    MaterialModule,
+    TooltipModule // Reference: https://www.itsolutionstuff.com/post/angular-tooltip-with-html-content-exampleexample.html
   ]
 })
 export class PaginationModule { }
