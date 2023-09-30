@@ -62,6 +62,7 @@ export class PaginationComponent implements OnInit {
 
   buildPaginatedEmployeeReimbursementData() {
     return {
+      employeeId: 1,
       pageNumber: this.pageNumber + 1,
       pageSize: this.pageSize,
       search: this.search,
@@ -98,8 +99,8 @@ export class PaginationComponent implements OnInit {
     this.formStatus = status;
 
     const dialogRef = this.dialog.open(EmployeeReimbursementModalComponent, {
-      width: this.formStatus === "Delete" ? "400px" : "500px",
-      height: this.formStatus === "Delete" ? "100px" : "700px",
+      width: this.formStatus === "Delete" ? "373px" : "500px",
+      height: this.formStatus === "Delete" ? "153px" : "700px",
       data: {
         formStatus: this.formStatus,
         empReimbursementFromPaginatedData: data,

@@ -44,3 +44,60 @@
     background: #b71c1c;
   }
   
+//
+
+.table-container {
+    padding: 1em 2em;
+    font-family: Poppins;
+}
+
+.btn-create {
+    background-color: #00964b;
+    font-size: 12px;
+    color: white !important;
+    font-family: Poppins;
+    margin-left: 2em;
+    min-width: 113px;
+    border-radius: 7px;
+}
+
+.tbl-h-name {
+    font-weight: bold;
+}
+
+.tbl-container {
+    margin-top: 1em;
+}
+
+::ng-deep.tbl-style {
+    .mat-mdc-header-cell, .mat-mdc-cell {
+        font-family: Poppins !important;
+        font-size: 12px;
+    }
+
+    .mat-mdc-header-cell { 
+        color: #808080 !important;
+        font-weight: bold !important;
+    }
+
+    .mat-mdc-cell {
+        font-size: 13px;
+    }
+}
+
+.btn-update, .btn-delete {
+    font-size: 12px;
+    color: white !important;
+    font-family: Poppins;
+    margin-right: 5px;
+    border-radius: 7px;
+    padding: 0 1em;
+}
+
+.btn-update {
+    background-color: #007bed;
+}
+
+.btn-delete {
+    background-color: #cf1100;
+}

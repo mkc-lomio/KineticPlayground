@@ -1,74 +1,96 @@
-<ng-container
-    *ngIf="formStatus == 'Create' ||
- formStatus == 'Update'; else deleteDialog"
->
-    <h2>{{ formStatus === 'Create' ? 'Create new' : formStatus }} Reimbursement</h2>
+    <ng-container
+        *ngIf="formStatus == 'Create' ||
+    formStatus == 'Update'; else deleteDialog"
+    >
+        <div class="modal-container">
+            <div class="modal-header w-100">{{ formStatus === 'Create' ? 'Create new' : formStatus }} Reimbursement</div>
 
-    <p>Status: {{ showFormStatus(formStatus) }}</p>
+            <!-- <div class="header-title">{{ formStatus === 'Create' ? 'Create new' : formStatus }} Reimbursement</div> -->
+            <div class="modal-deets">
+                <p>Status: {{ showFormStatus(formStatus) }}</p>
 
-    <form [formGroup]="employeReimbursementForm">
-        <div>
-            Reimbursement Type
-            <select formControlName="reimbursementType" placeholder="Choose a reimbursement type">
-                <option *ngFor="let reimbursementType of reimbursementTypes" [value]="reimbursementType.code">
-                    {{ reimbursementType.name }}
-                </option>
-            </select>
-            <ng-container *ngIf="(reimbursementTypeFormField.dirty || reimbursementTypeFormField.touched)">
-                <mat-error *ngIf="reimbursementTypeFormField.invalid && reimbursementTypeFormField.errors?.required" class="error-lbl">
-                    ReimbursementType is Required
-                </mat-error>
-            </ng-container>
-            <br />
+                <form [formGroup]="employeReimbursementForm">
+                    <div>
+                        Reimbursement Type
+                        <select formControlName="reimbursementType" placeholder="Choose a reimbursement type">
+                            <option *ngFor="let reimbursementType of reimbursementTypes" [value]="reimbursementType.code">
+                                {{ reimbursementType.name }}
+                            </option>
+                        </select>
+                        <ng-container *ngIf="(reimbursementTypeFormField.dirty || reimbursementTypeFormField.touched)">
+                            <mat-error *ngIf="reimbursementTypeFormField.invalid && reimbursementTypeFormField.errors?.required" class="error-lbl">
+                                ReimbursementType is Required
+                            </mat-error>
+                        </ng-container>
+                        <br />
+                    </div>
+
+                    <br />
+                    <p>Employee Reviewer: Ramil Azores</p>
+
+                    <br />
+                    Transaction Dates
+                    <input type="text" id="picker1" readonly [value]="transactionDate" [max]="transactionMaxDate" placeholder="Choose a date" [matDatepicker]="transactionDatePicker" (dateChange)="dateChangeHandler($event.value,'transactionDate')" />
+                    <button type="button" (click)="transactionDatePicker.open()">Pick a transaction Date</button>
+                    <mat-datepicker #transactionDatePicker></mat-datepicker>
+                    <br />
+                    <br />
+
+                    Requested Dates
+                    <input type="text" id="picker2" readonly [value]="requestedDate" [min]="requestedMinDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" />
+                    <button type="button" (click)="requestedDatePicker.open()">Pick a requested Date</button>
+                    <mat-datepicker #requestedDatePicker></mat-datepicker>
+                    <br />
+
+                    Additional Information
+
+                    <mat-form-field appearance="outline">
+                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" formControlName="additionalInformation"></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <label for="totalAmount">Total Amount: </label>
+                        <input matInput type="number" id="totalAmount" formControlName="totalAmount" />
+                        <ng-container *ngIf="(totalAmountFormField.dirty || totalAmountFormField.touched)">
+                            <mat-error *ngIf="totalAmountFormField.invalid && totalAmountFormField.errors?.required" class="error-lbl">
+                                Total Amount is Required
+                            </mat-error>
+                        </ng-container>
+                    </mat-form-field>
+
+                    <pre>
+                    {{employeReimbursementForm.value | json}}
+
+                    </pre>
+                </form>
+
+                <div  class="footer">
+                    <div fxLayout="row">
+                        <ng-container *ngIf="formStatus == 'Update' && 
+                        employeeReimbursementStatus == 'Submitted'"> <button mat-button class="btn-cancel">Cancel</button> &nbsp; </ng-container>
+                        <button mat-button class="btn-close" (click)="close()">Close</button>
+                        <div fxFlex></div>
+                        <button mat-button class="btn-save" [disabled]="employeeReimbursementStatus != 'Submitted' || !employeReimbursementForm.valid" 
+                        (click)="onSubmit(employeReimbursementForm.value)">Save</button>
+                        </div>
+                </div>
+            </div>
+
         </div>
+    </ng-container>
 
-        <br />
-        <p>Employee Reviewer: Ramil Azores</p>
-
-        <br />
-        Transaction Dates
-        <input type="text" id="picker1" readonly [value]="transactionDate" [max]="transactionMaxDate" placeholder="Choose a date" [matDatepicker]="transactionDatePicker" (dateChange)="dateChangeHandler($event.value,'transactionDate')" />
-        <button type="button" (click)="transactionDatePicker.open()">Pick a transaction Date</button>
-        <mat-datepicker #transactionDatePicker></mat-datepicker>
-        <br />
-        <br />
-
-        Requested Dates
-        <input type="text" id="picker2" readonly [value]="requestedDate" [min]="requestedMinDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" />
-        <button type="button" (click)="requestedDatePicker.open()">Pick a requested Date</button>
-        <mat-datepicker #requestedDatePicker></mat-datepicker>
-        <br />
-
-        Additional Information
-
-        <mat-form-field appearance="outline">
-            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" formControlName="additionalInformation"></textarea>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <label for="totalAmount">Total Amount: </label>
-            <input matInput type="number" id="totalAmount" formControlName="totalAmount" />
-            <ng-container *ngIf="(totalAmountFormField.dirty || totalAmountFormField.touched)">
-                <mat-error *ngIf="totalAmountFormField.invalid && totalAmountFormField.errors?.required" class="error-lbl">
-                    Total Amount is Required
-                </mat-error>
-            </ng-container>
-        </mat-form-field>
-
-        <pre>
-        {{employeReimbursementForm.value | json}}
-
-        </pre>
-    </form>
-
-    <button mat-button class="btn-save-theme" [disabled]="employeeReimbursementStatus != 'Submitted' || !employeReimbursementForm.valid" 
-    (click)="onSubmit(employeReimbursementForm.value)">Save</button> &nbsp;
-    <ng-container *ngIf="formStatus == 'Update' && 
-    employeeReimbursementStatus == 'Submitted'"> <button mat-button class="btn-cancel-theme">Cancel</button> &nbsp; </ng-container>
-    <button mat-button class="btn-close-theme" (click)="close()">Close</button>
-</ng-container>
-<ng-template #deleteDialog>
-    <p>Are you sure you want to delete this data?</p>
-    <button mat-button class="btn-save-theme" (click)="onSubmit()">Yes</button> &nbsp;
-    <button mat-button class="btn-close-theme" (click)="close()">Close</button>
-</ng-template>
+    <ng-template #deleteDialog>
+            <div class="del-container" fxLayoutAlign="start center" fxLayout="column">
+                <div class="modal-header w-100">Confirmation</div>
+                <div class="w-100">
+                    <p class="del-label">Are you sure you want to delete this data?</p>
+                    <div>
+                        <div fxLayout="row">
+                            <button mat-button class="btn-save" (click)="onSubmit()">Yes</button> &nbsp;
+                            <div fxFlex></div>
+                            <button mat-button class="btn-close" (click)="close()">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </ng-template>

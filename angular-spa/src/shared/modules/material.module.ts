@@ -42,6 +42,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   exports: [
@@ -88,7 +89,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     PortalModule,
     ScrollingModule,
     MatFormFieldModule,
-    TextFieldModule
+    TextFieldModule,
+    FlexLayoutModule
   ]
 })
 export class MaterialModule { }
