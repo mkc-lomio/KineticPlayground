@@ -92,7 +92,7 @@ export class EmployeeReimbursementModalComponent implements OnInit {
   }
 
   formStatus: string = "";
-  employeeReimbursementStatus: string = "";
+  employeeReimbursementStatus: string = "New";
   requestedDate: any;
   requestedMinDate: Date = new Date();
   transactionDate: any;
@@ -302,5 +302,21 @@ export class EmployeeReimbursementModalComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  validateform(): boolean {
+    return this.employeeReimbursementStatus == 'Rejected' 
+    || this.employeeReimbursementStatus == 'Approved' 
+    || this.employeeReimbursementStatus == 'Cancelled' 
+    || !this.employeReimbursementForm.valid
+  }
+
+  reimbursementCancel(){
+    this._employeeReimbursementService.cancelEmployeeReimbursement(this.employeeReimbursementId).subscribe(result => {
+      alert("SUCCESS!");
+      this.close();
+    }, error => {
+      console.log(error)
+    })
   }
 }

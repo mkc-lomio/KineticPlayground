@@ -65,7 +65,12 @@ deleteEmployeeReimbursementById(id: any) {
   return this.http.delete<any>(url);
 }
 
-
+cancelEmployeeReimbursement(id: any): Observable<any> {
+  let url= `${environment.kineticplaygroundapi}/api/EmployeeReimbursement/Cancellation?id=${id}`;
+  
+  let body=null;
+  return this.http.put(url, body);
+}
 
 
 getWeatherForecast() {

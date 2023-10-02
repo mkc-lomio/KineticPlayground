@@ -67,10 +67,10 @@
                 <div  class="footer">
                     <div fxLayout="row">
                         <ng-container *ngIf="formStatus == 'Update' && 
-                        employeeReimbursementStatus == 'Submitted'"> <button mat-button class="btn-cancel">Cancel</button> &nbsp; </ng-container>
+                        employeeReimbursementStatus == 'Submitted'"> <button mat-button class="btn-cancel"  (click)="reimbursementCancel()">Cancel</button> &nbsp; </ng-container>
                         <button mat-button class="btn-close" (click)="close()">Close</button>
                         <div fxFlex></div>
-                        <button mat-button class="btn-save" [disabled]="employeeReimbursementStatus != 'Submitted' || !employeReimbursementForm.valid" 
+                        <button mat-button class="btn-save" [disabled]="validateform()" 
                         (click)="onSubmit(employeReimbursementForm.value)">Save</button>
                         </div>
                 </div>
