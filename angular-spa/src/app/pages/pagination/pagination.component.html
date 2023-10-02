@@ -3,7 +3,10 @@
     <div class="tbl-header-contaner">
         <div fxFlexLayout="row" fxLayoutAlign="start center">
             <div fxFlex class="tbl-h-name">Reimbursement</div>
-            <input class="form-control" type="text" [(ngModel)]="search" placeholder="Search" (input)="onSearchChange($event)" />
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Placeholder" [(ngModel)]="search" placeholder="Search" (input)="onSearchChange($event)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
             <button class="btn-create" mat-button (click)="openCUDialog('Create')">Create</button>
         </div>
     </div>

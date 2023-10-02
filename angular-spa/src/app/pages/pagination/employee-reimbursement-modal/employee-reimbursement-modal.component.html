@@ -3,61 +3,87 @@
     formStatus == 'Update'; else deleteDialog"
     >
         <div class="modal-container">
-            <div class="modal-header w-100">{{ formStatus === 'Create' ? 'Create new' : formStatus }} Reimbursement</div>
+            <div class="e-modal-header w-100">
+                <div fxLayout="row">
+                    <div fxFlex>{{ formStatus === 'Create' ? 'Create new' : formStatus }} Reimbursement</div>
+                    <div class="status status-{{showFormStatus(formStatus)}}">{{ showFormStatus(formStatus) }}</div>
+                </div>
+            </div>
 
             <!-- <div class="header-title">{{ formStatus === 'Create' ? 'Create new' : formStatus }} Reimbursement</div> -->
             <div class="modal-deets">
-                <p>Status: {{ showFormStatus(formStatus) }}</p>
 
                 <form [formGroup]="employeReimbursementForm">
-                    <div>
-                        Reimbursement Type
-                        <select formControlName="reimbursementType" placeholder="Choose a reimbursement type">
-                            <option *ngFor="let reimbursementType of reimbursementTypes" [value]="reimbursementType.code">
-                                {{ reimbursementType.name }}
-                            </option>
-                        </select>
+
+                    <div class="row-item">
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Reimbursement Type </mat-label>
+                            <mat-select formControlName="reimbursementType" placeholder="Choose a reimbursement type">
+                                <mat-option *ngFor="let reimbursementType of reimbursementTypes" [value]="reimbursementType.code">
+                                    {{ reimbursementType.name }}</mat-option>
+                              </mat-select>
+                        </mat-form-field>
                         <ng-container *ngIf="(reimbursementTypeFormField.dirty || reimbursementTypeFormField.touched)">
                             <mat-error *ngIf="reimbursementTypeFormField.invalid && reimbursementTypeFormField.errors?.required" class="error-lbl">
                                 ReimbursementType is Required
                             </mat-error>
                         </ng-container>
-                        <br />
                     </div>
 
-                    <br />
-                    <p>Employee Reviewer: Ramil Azores</p>
 
-                    <br />
-                    Transaction Dates
-                    <input type="text" id="picker1" readonly [value]="transactionDate" [max]="transactionMaxDate" placeholder="Choose a date" [matDatepicker]="transactionDatePicker" (dateChange)="dateChangeHandler($event.value,'transactionDate')" />
-                    <button type="button" (click)="transactionDatePicker.open()">Pick a transaction Date</button>
-                    <mat-datepicker #transactionDatePicker></mat-datepicker>
-                    <br />
-                    <br />
+                    <div class="row-item">
+                        <mat-form-field class="w-full readonly-style" appearance="outline">
+                            <mat-label>Employee Reviewer</mat-label>
+                            <input matInput placeholder="Input Employee Reviewer" value="Ramil Azores"readonly>
+                        </mat-form-field>
+                    </div>
 
-                    Requested Dates
-                    <input type="text" id="picker2" readonly [value]="requestedDate" [min]="requestedMinDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" />
-                    <button type="button" (click)="requestedDatePicker.open()">Pick a requested Date</button>
-                    <mat-datepicker #requestedDatePicker></mat-datepicker>
-                    <br />
+                    <div class="row-item">
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Transaction Date</mat-label>
+                            <input [value]="transactionDate" [max]="transactionMaxDate" placeholder="Choose a date" [matDatepicker]="transactionDatePicker" (dateChange)="dateChangeHandler($event.value,'transactionDate')" matInput [matDatepicker]="transactionDatePicker" readonly>
+                            <mat-datepicker-toggle matIconSuffix [for]="transactionDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #transactionDatePicker></mat-datepicker>
+                        </mat-form-field>
 
-                    Additional Information
+                        <!-- <button type="button" (click)="transactionDatePicker.open()">Pick a transaction Date</button>
+                        <mat-datepicker #transactionDatePicker></mat-datepicker> -->
+                    </div>
 
-                    <mat-form-field appearance="outline">
-                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5" formControlName="additionalInformation"></textarea>
-                    </mat-form-field>
+                    <div class="row-item">
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Requested Date</mat-label>
+                            <input matInput readonly [matDatepicker]="requestedDatePicker"
+                                                        [value]="requestedDate" [min]="requestedMinDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" >
+                            <mat-datepicker-toggle matIconSuffix [for]="requestedDatePicker"></mat-datepicker-toggle>
+                            <mat-datepicker #requestedDatePicker></mat-datepicker>
+                        </mat-form-field>
+                          
+                        <!-- <input type="text" id="picker2" readonly [value]="requestedDate" [min]="requestedMinDate" placeholder="Choose a date" [matDatepicker]="requestedDatePicker" (dateChange)="dateChangeHandler($event.value,'requestedDate')" />
+                        <button type="button" (click)="requestedDatePicker.open()">Pick a requested Date</button>
+                        <mat-datepicker #requestedDatePicker></mat-datepicker> -->
+                    </div>
 
-                    <mat-form-field appearance="outline">
-                        <label for="totalAmount">Total Amount: </label>
-                        <input matInput type="number" id="totalAmount" formControlName="totalAmount" />
+                    <div class="row-item">
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Additional Information </mat-label>
+                            <textarea matInput  placeholder="Input Additional Information" formControlName="additionalInformation"></textarea>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row-item">
+                        <mat-form-field class="w-full" appearance="outline">
+                            <mat-label>Total Amount </mat-label>
+                            <input matInput type="number" id="totalAmount" formControlName="totalAmount" placeholder="Input Amount"/>
+                        </mat-form-field>
                         <ng-container *ngIf="(totalAmountFormField.dirty || totalAmountFormField.touched)">
                             <mat-error *ngIf="totalAmountFormField.invalid && totalAmountFormField.errors?.required" class="error-lbl">
                                 Total Amount is Required
                             </mat-error>
                         </ng-container>
-                    </mat-form-field>
+                    </div>
 
+                
                     <pre>
                     {{employeReimbursementForm.value | json}}
 
@@ -81,7 +107,7 @@
 
     <ng-template #deleteDialog>
             <div class="del-container" fxLayoutAlign="start center" fxLayout="column">
-                <div class="modal-header w-100">Confirmation</div>
+                <div class="e-modal-header w-100">Confirmation</div>
                 <div class="w-100">
                     <p class="del-label">Are you sure you want to delete this data?</p>
                     <div>

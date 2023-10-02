@@ -67,8 +67,9 @@
     margin-bottom: 1em;
 }
 
-.w-100 { width: 100%;}
-.modal-header {
+.w-100 { width: 94%;}
+.w-full { width: 100%;}
+.e-modal-header {
     font-family: Poppins;
     margin-bottom: 1em;
     border-bottom: 1px solid #d6d6d6;
@@ -79,23 +80,48 @@
 }
 
 .modal-deets { padding: 1.5em}
-//
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
+
+.status { 
+    font-weight: bold;
+    padding: 2px 14PX;
+    border-radius: 5px;
+    font-size: 13px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888; 
+.status-Cancelled {
+    background-color: #cf1100;
+    color: #ffb9b3;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+.status-Submitted {
+    background-color: #00964b;
+    color: #e6e6e6;
+}
+
+.status-New {
+    background-color: #00329e;
+    color: #d1e0ff;
+}
+
+::ng-deep.mat-form-field { font-family: Poppins;}
+
+.row-item {
+    width: 100%;
+}
+
+.error-lbl {
+    font-size: 12px;
+    margin-top: -19px;
+    margin-bottom: 10px;
+}
+
+::ng-deep.readonly-style {
+    .mdc-notched-outline{
+        background: #e0e0e0 !important;
+        opacity: 0.5 !important;
+    }
+    
+    .input { 
+        opacity: 0.5 !important;
+    }
 }
